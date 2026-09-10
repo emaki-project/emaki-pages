@@ -1,0 +1,142 @@
+# Privacy Policy for Emaki
+
+**Effective Date:** September 10, 2026  
+**Last Updated:** September 10, 2026  
+**Application Name:** Emaki  
+**Application Package ID:** `com.emaki.reader`  
+
+---
+
+## 1. Introduction & Overview
+
+Emaki ("we", "our", or "the App") is a lightweight, swipeable visual feed reader and bookmark manager for imageboards and creative communities. 
+
+We believe privacy is a fundamental right. Emaki is designed from the ground up with a **privacy-by-design, client-centric architecture**:
+- **Guest Mode by Default:** You can use all core features of the App (browsing feeds, searching, bookmarking locally, and importing custom imageboards) completely anonymously without creating an account or providing any personal information.
+- **No Middleman Server:** The App communicates directly with your chosen imageboards and backend services; there is no third-party tracking broker.
+- **No Ads or Data Selling:** We do not display third-party advertisements, do not sell user data, and do not track you across other apps or websites.
+
+This Privacy Policy explains how information is collected, stored, encrypted, and handled when you use Emaki.
+
+---
+
+## 2. Information We Collect
+
+### A. Information You Provide (Optional Account)
+If you voluntarily choose to register an Emaki account for cross-device synchronization, we process:
+- **Authentication Details:** Your email address and a password. Passwords are never stored in plaintext; they are securely hashed using industry-standard bcrypt algorithms managed by Supabase Auth.
+- **Profile Information:** Optional display name, username, bio, and avatar URL.
+- **Cloud Vault & Bookmarks:** If signed in, your favorited post identifiers, media URLs, tags, and personal curation notes are synchronized to your private cloud storage.
+- **Followed Targets:** Artist and character tags you follow for quick access.
+- **Third-Party Booru API Credentials (Optional):** If you configure personal API keys for third-party imageboards (e.g., Danbooru, Gelbooru, Rule34), they are stored locally on your device in hardware-backed `EncryptedSharedPreferences` (AES-256-GCM) and encrypted before any cloud backup.
+
+### B. Device & Technical Information
+- **Local Cache:** Favorited posts, recent searches, downloaded media, and viewing preferences are stored locally on your device via an encrypted SQLite Room database.
+- **Permissions:** 
+  - `INTERNET` & `ACCESS_NETWORK_STATE`: Required to fetch visual feeds and verify connectivity.
+  - `WRITE_EXTERNAL_STORAGE` / Media Permissions (Android 9 and below): Only requested if you explicitly tap the download button to save an image or video to your device's local gallery.
+
+### C. Anonymous Usage Analytics (Strictly Opt-In)
+- Emaki includes an optional, privacy-respecting client event logger.
+- **Default State:** Analytics are **disabled by default**. No telemetry is collected unless you explicitly toggle "Help Improve Emaki" on in Settings.
+- **Privacy Guarantees:** 
+  - Telemetry is coarse and non-identifying (e.g., app launches, general error events).
+  - Session IDs are randomized, ephemeral, and reset every time the app closes.
+  - No user ID, email, IP address, Android ID, Advertising ID (GAID), or search queries are ever attached to analytics events.
+  - You can withdraw consent at any time in **Settings**, which immediately halts all event dispatching.
+
+### D. Information We NEVER Collect
+We do **not** collect, access, or share:
+- Precise or coarse GPS location data
+- Contacts, address book, or phone logs
+- SMS or communication records
+- Financial, credit card, or payment information
+- Biometric data
+- Google Advertising ID (GAID) or device fingerprinting
+
+---
+
+## 3. How We Use Information
+
+Any data collected is used solely to:
+1. Authenticate your identity and maintain your active session.
+2. Synchronize your bookmarked Vault, collections (Stashes), and followed creators across your personal devices.
+3. Authenticate requests to external imageboard APIs that require user credentials.
+4. Diagnose app crashes and improve stability (only if you opt into anonymous analytics).
+
+We **never** sell, rent, monetize, or share your data with advertisers or data brokers.
+
+---
+
+## 4. Data Security & Encryption Standards
+
+We implement modern, multi-layered security measures to protect your personal data:
+
+- **In Transit:** All communications with our cloud database (Supabase) and external imageboard APIs use strict **TLS 1.3 / HTTPS encryption**.
+- **On Device:** Third-party API credentials and secure preferences are protected using Android's Jetpack Security library (`EncryptedSharedPreferences` backed by the hardware `MasterKey` with AES-256-GCM and AES-256-SIV).
+- **At Rest (Cloud):** Database tables are secured with strict PostgreSQL **Row Level Security (RLS)** policies. Each user's cloud vault, credentials, and follows are restricted such that only the authenticated account owner (`auth.uid()`) can read, write, or delete their records.
+- **Zero-Knowledge Field Encryption:** Sensitive fields (such as third-party API keys and private bookmarks) undergo client-side authenticated encryption (AES-256-GCM) before being transmitted to the cloud database.
+
+---
+
+## 5. Third-Party Services & External APIs
+
+When using Emaki, the app connects directly from your device to the following services:
+
+| Service | Purpose | Privacy Policy |
+|---|---|---|
+| **Supabase** | User authentication, cloud vault synchronization, and database hosting | [Supabase Privacy Policy](https://supabase.com/privacy) |
+| **Safebooru** | Default family-friendly imageboard feed | [Safebooru Terms](https://safebooru.org) |
+| **External / User-Added Boorus** | Content feeds selected or imported by the user (e.g., Danbooru, Gelbooru) | Governed by each individual service's respective policies |
+
+*Note: In the Google Play release flavor of Emaki, all default content is strictly restricted to family-friendly, general-rated imageboards (Safebooru). Users may optionally import external community source configurations, which connect directly from the user's device to those respective endpoints.*
+
+---
+
+## 6. Account & Data Deletion Policy
+
+You have full control over your personal data at all times.
+
+### In-App Deletion (Immediate)
+You can permanently delete your Emaki account and all associated cloud data directly inside the app:
+1. Open **Emaki**.
+2. Go to **Profile → Settings (Gear icon)**.
+3. Under **Account**, tap **Delete Account & Data**.
+4. Confirm the prompt.
+
+**Result:** Your account, profile, cloud vault bookmarks, follows, credentials, and local caches are **immediately, completely, and permanently erased** from our servers and your device.
+
+### Web / Email Deletion Request
+If you have uninstalled the app or cannot log in:
+- Send an email to **[support@emaki.app](mailto:support@emaki.app)** with the subject `Account Deletion Request - Emaki` and your registered email address.
+- Requests are verified and processed within **7 business days** (maximum 30 calendar days).
+
+### Data Retention
+Emaki retains **0 days of user data** following account deletion. We do not retain residual copies, archives, or backups of deleted accounts.
+
+---
+
+## 7. Children's Privacy (COPPA)
+
+Emaki does not target and is not intended for children under the age of 13 (or under 16 in the European Union). We do not knowingly collect personal data from children. If we discover that a child has created an account or provided personal information, we will immediately delete that account and all associated data. If you believe a child has provided us with personal information, please contact us at [support@emaki.app](mailto:support@emaki.app).
+
+---
+
+## 8. Your Rights (GDPR & CCPA/CPRA)
+
+Depending on your jurisdiction (such as the European Economic Area, the UK, or California), you have the following rights regarding your personal information:
+- **Right to Access:** You may request a copy of the personal information we hold about you.
+- **Right to Rectification:** You can update your display name, username, and bio at any time in Profile settings.
+- **Right to Erasure ("Right to Be Forgotten"):** You can permanently delete your account and all data via the in-app deletion button or by emailing support.
+- **Right to Restrict or Object to Processing:** You can disable all cloud sync features simply by using the app in Guest Mode or opting out of analytics.
+- **Right to Data Portability:** You can export your local stashes and configurations at any time.
+
+We do not discriminate against users for exercising any of their privacy rights.
+
+---
+
+## 9. Changes to this Privacy Policy
+
+We may update this Privacy Policy from time to time to reflect changes in our practices or applicable laws. Any updates will be posted to this page with an updated "Last Updated" date. For significant changes, we will provide in-app notices where appropriate.
+
+---
